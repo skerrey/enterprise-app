@@ -453,11 +453,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sethk\\source\\repos\\skerrey\\enterprise-app\\backend\\backend.csproj",
+      "projectUniqueName": "C:\\Users\\sethk\\Documents\\GitHub\\enterprise-app\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "C:\\Users\\sethk\\source\\repos\\skerrey\\enterprise-app\\backend\\backend.csproj",
+      "projectPath": "C:\\Users\\sethk\\Documents\\GitHub\\enterprise-app\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\sethk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sethk\\source\\repos\\skerrey\\enterprise-app\\backend\\obj\\",
+      "outputPath": "C:\\Users\\sethk\\Documents\\GitHub\\enterprise-app\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

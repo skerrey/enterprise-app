@@ -19,6 +19,7 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import Stepper from "./pages/Stepper";
+import Requests from "./pages/Requests";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
             <Route path="/new-requests" element={<Stepper />} />
+            <Route path="/approvals" element={<Requests />} />
 
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />

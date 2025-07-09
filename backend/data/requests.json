@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "clientName": "John Doe",
+    "email": "john@example.com",
+    "selectedProduct": "Laptop",
+    "notes": "Urgent delivery needed.",
+    "attachmentUrl": "",
+    "createdAt": "2024-06-01T12:00:00Z"
+  },
+  {
+    "id": 2,
+    "clientName": "Jane Smith",
+    "email": "jane@example.com",
+    "selectedProduct": "Phone",
+    "notes": "Please include charger.",
+    "attachmentUrl": "",
+    "createdAt": "2024-06-02T15:30:00Z"
+  }
+]

@@ -7,7 +7,7 @@ import axios from "axios";
 
 interface Request {
   id: number;
-  ClientName: string;
+  clientName: string;
   email: string;
   selectedProduct: string;
   notes: string;

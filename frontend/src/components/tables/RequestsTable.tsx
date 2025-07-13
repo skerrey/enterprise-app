@@ -9,7 +9,7 @@ import {
 
 interface Request {
   id: number;
-  clientName: string;
+  ClientName: string;
   email: string;
   selectedProduct: string;
   notes: string;
@@ -41,7 +41,7 @@ export default function BasicRequestsTable({ data }: Props) {
             {data.map((req) => (
               <TableRow key={req.id}>
                 <TableCell className="px-5 py-4 text-start text-theme-sm text-gray-700 dark:text-white/90">{req.id}</TableCell>
-                <TableCell className="px-5 py-4 text-start text-theme-sm text-gray-700 dark:text-white/90">{req.clientName}</TableCell>
+                <TableCell className="px-5 py-4 text-start text-theme-sm text-gray-700 dark:text-white/90">{req.ClientName}</TableCell>
                 <TableCell className="px-5 py-4 text-start text-theme-sm text-gray-500 dark:text-gray-400">{req.email}</TableCell>
                 <TableCell className="px-5 py-4 text-start text-theme-sm text-gray-500 dark:text-gray-400">{req.selectedProduct}</TableCell>
                 <TableCell className="px-5 py-4 text-start text-theme-sm text-gray-500 dark:text-gray-400 max-w-[200px] truncate">{req.notes}</TableCell>

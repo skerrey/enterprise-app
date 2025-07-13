@@ -7,7 +7,7 @@ import axios from "axios";
 
 interface Request {
   id: number;
-  clientName: string;
+  ClientName: string;
   email: string;
   selectedProduct: string;
   notes: string;
@@ -22,7 +22,8 @@ export default function RequestsPage() {
   const fetchRequests = async () => {
     try {
       console.log("getting requests");
-      const { data } = await axios.get(`${process.env.BACKEND_API}/api/Requests`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/Requests`);
+      console.log("requests data", data);
       setRequests(data);
     } catch (error) {
       console.error("Failed to fetch requests", error);

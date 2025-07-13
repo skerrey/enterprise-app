@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using System.Text.Json;
-using System.IO;
 
 namespace backend.Controllers
 {
@@ -11,7 +10,7 @@ namespace backend.Controllers
     public class RequestsController : ControllerBase
     {
         //private static readonly List<Request> requests = new();
-        private static readonly string dataPath = Path.Combine("data", "requests.json");
+        private static readonly string dataPath = Path.Combine(AppContext.BaseDirectory, "data", "requests.json");
         private static List<Request> requests = LoadRequestsFromFile();
 
         private static List<Request> LoadRequestsFromFile()

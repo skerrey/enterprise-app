@@ -18,6 +18,8 @@ namespace backend.Controllers
             if (!System.IO.File.Exists(dataPath)) return new List<Request>();
 
             var json = System.IO.File.ReadAllText(dataPath);
+            Console.WriteLine($"Loading requests from {dataPath}");
+            Console.WriteLine(json);
             return JsonSerializer.Deserialize<List<Request>>(json) ?? new List<Request>();
         }
 
@@ -39,7 +41,8 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult GetAllRequests()
         {
-            return Ok(requests);
+            var json = System.IO.File.ReadAllText(dataPath);
+            return Ok(json);
         }
 
         [HttpGet("{id}")]

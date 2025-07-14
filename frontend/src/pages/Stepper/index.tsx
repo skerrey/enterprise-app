@@ -4,20 +4,40 @@ import PageMeta from "../../components/common/PageMeta";
 import ClientInfo from "./components/ClientInfo";
 import ProductSelection from "./components/ProductSelection";
 import Attachments from "./components/Attachments";
+import { Summary } from "./components/Summary";
+import { TForm } from "./types";
 
-const steps = ["Client Info", "Product Selection", "Attachments"];
+const steps = ["Client Info", "Product Selection", "Attachments", "Review & Submit"];
 
 export default function NewRequestStepper() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [form, setForm] = useState<TForm>({
+    requestorName: "",
+    requestorEmail: "",
+    department: "",
+    employeeID: "",
+    onBehalfOf: "",
+    requestTitle: "",
+    description: "",
+    requestedDate: "",
+    dueDate: "",
+    priority: "",
+    products: [],
+    budget: 0,
+    costCenter: "",
+    attachments: []
+  });
 
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
-        return <ClientInfo />;
+        return <ClientInfo form={form} setForm={setForm} />;
       case 1:
-        return <ProductSelection />;
+        return <ProductSelection form={form} setForm={setForm} />;
       case 2:
-        return <Attachments />;
+        return <Attachments form={form} setForm={setForm} />;
+      case 3:
+        return <Summary form={form} />;
       default:
         return null;
     }
@@ -30,7 +50,7 @@ export default function NewRequestStepper() {
 
       <div className="flex flex-col lg:flex-row gap-2">
         {/* Stepper Navigation */}
-        <ol className="space-y-8 w-full lg:w-1/4 flex lg:flex-col lg:h-[300px]">
+        <ol className="lg:sticky top-24 space-y-8 w-full lg:w-1/5 flex lg:flex-col lg:h-[300px]">
           {steps.map((label, index) => (
             <li
               key={index}
@@ -86,7 +106,7 @@ export default function NewRequestStepper() {
                     index + 1
                   )}
                 </span>
-                <div className="flex flex-col items-baseline space-y-2 lg:items-start">
+                <div className="flex flex-col lg:space-y-0 space-y-2 items-start">
                   <h4
                     className={`text-lg ${
                       currentStep === index ? "text-indigo-600" : "text-gray-900"
@@ -102,7 +122,7 @@ export default function NewRequestStepper() {
         </ol>
 
         {/* Step Content */}
-        <div className="w-full lg:w-3/4">
+        <div className="w-full lg:w-4/5">
           {renderStepContent()}
 
           <div className="flex justify-between mt-6">

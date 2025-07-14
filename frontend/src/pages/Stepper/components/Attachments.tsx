@@ -1,20 +1,42 @@
+// src/stepper/components/Attachments.tsx
+import React from "react";
 import ComponentCard from "../../../components/common/ComponentCard";
-import FileInput from "../../../components/form/input/FileInput";
 import Label from "../../../components/form/Label";
+import FileInput from "../../../components/form/input/FileInput";
+import { TForm } from "../types";
 
-export default function FileInputExample() {
+type Props = {
+  form: TForm;
+  setForm: (form: TForm) => void;
+};
+
+export default function Attachments({ form, setForm }: Props) {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log("Selected file:", file.name);
+      // Append new file to attachments array
+      setForm({ ...form, attachments: [...form.attachments, file] });
     }
   };
 
   return (
-    <ComponentCard title="File Input">
-      <div>
-        <Label>Upload file</Label>
-        <FileInput onChange={handleFileChange} className="custom-class" />
+    <ComponentCard title="Attachments">
+      <div className="space-y-4">
+        <Label htmlFor="attachment">Upload Attachment</Label>
+        <FileInput
+          id="attachment"
+          onChange={handleFileChange}
+          className="custom-class"
+        />
+        {form.attachments.length > 0 && (
+          <ul className="list-disc list-inside pt-2">
+            {form.attachments.map((file, i) => (
+              <li key={i} className="text-sm text-gray-700 dark:text-gray-400">
+                {file.name}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </ComponentCard>
   );

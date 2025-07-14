@@ -1,113 +1,164 @@
-import { useState } from "react";
-import ComponentCard from "../../../components/common/ComponentCard.tsx";
-import Label from "../../../components/form/Label.tsx"
-import Input from "../../../components/form/input/InputField.tsx";
-import Select from "../../../components/form/Select.tsx";
-import { EyeCloseIcon, EyeIcon, TimeIcon } from "../../../icons/index.ts";
-import DatePicker from "../../../components/form/date-picker.tsx";
+// src/stepper/components/RequestForm.tsx
+import React from "react";
+import ComponentCard from "../../../components/common/ComponentCard";
+import Label from "../../../components/form/Label";
+import Input from "../../../components/form/input/InputField";
+import TextArea from "../../../components/form/input/TextArea";
+import Select from "../../../components/form/Select";
+import DatePicker from "../../../components/form/date-picker";
+import { TForm } from "../types";
 
-export default function DefaultInputs() {
-  const [showPassword, setShowPassword] = useState(false);
-  const options = [
+type RequestFormProps = {
+  form: TForm;
+  setForm: (form: TForm) => void;
+};
+
+export default function RequestForm({ form, setForm }: RequestFormProps) {
+  const departmentOptions = [
+    { value: "engineering", label: "Engineering" },
     { value: "marketing", label: "Marketing" },
-    { value: "template", label: "Template" },
-    { value: "development", label: "Development" },
+    { value: "finance", label: "Finance" },
   ];
-  const handleSelectChange = (value: string) => {
-    console.log("Selected value:", value);
-  };
+
+  const priorityOptions = [
+    { value: "low", label: "Low" },
+    { value: "medium", label: "Medium" },
+    { value: "high", label: "High" },
+  ];
 
   return (
-    <ComponentCard title="Default Inputs">
-      <div className="space-y-6">
+    <ComponentCard title="Service Request">
+      <div className="space-y-4">
         <div>
-          <Label htmlFor="input">Input</Label>
-          <Input type="text" id="input" />
+          <Label htmlFor="requestor-name">Requestor Name</Label>
+          <Input
+            id="requestor-name"
+            type="text"
+            value={form.requestorName}
+            onChange={(e) =>
+              setForm({ ...form, requestorName: e.target.value })
+            }
+            placeholder="Your full name"
+          />
         </div>
+
         <div>
-          <Label htmlFor="inputTwo">Input with Placeholder</Label>
-          <Input type="text" id="inputTwo" placeholder="info@gmail.com" />
+          <Label htmlFor="requestor-email">Requestor Email</Label>
+          <Input
+            id="requestor-email"
+            type="email"
+            value={form.requestorEmail}
+            onChange={(e) =>
+              setForm({ ...form, requestorEmail: e.target.value })
+            }
+            placeholder="Corporate email"
+          />
         </div>
+
         <div>
-          <Label>Select Input</Label>
+          <Label htmlFor="department">Department</Label>
           <Select
-            options={options}
-            placeholder="Select an option"
-            onChange={handleSelectChange}
+            id="department"
+            options={departmentOptions}
+            defaultValue={form.department}
+            placeholder="Select department"
+            onChange={(value) =>
+              setForm({ ...form, department: value })
+            }
             className="dark:bg-dark-900"
           />
         </div>
+
         <div>
-          <Label>Password Input</Label>
-          <div className="relative">
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-            />
-            <button
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
-            >
-              {showPassword ? (
-                <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
-              ) : (
-                <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
-              )}
-            </button>
-          </div>
+          <Label htmlFor="employee-id">Employee ID</Label>
+          <Input
+            id="employee-id"
+            type="text"
+            value={form.employeeID}
+            onChange={(e) =>
+              setForm({ ...form, employeeID: e.target.value })
+            }
+            placeholder="Your internal employee number"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="on-behalf-of">
+            On Behalf Of <span className="text-sm font-normal">(Optional)</span>
+          </Label>
+          <Input
+            id="on-behalf-of"
+            type="text"
+            value={form.onBehalfOf}
+            onChange={(e) =>
+              setForm({ ...form, onBehalfOf: e.target.value })
+            }
+            placeholder="Name of the person"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="request-title">Request Title</Label>
+          <Input
+            id="request-title"
+            type="text"
+            value={form.requestTitle}
+            onChange={(e) =>
+              setForm({ ...form, requestTitle: e.target.value })
+            }
+            placeholder="Short summary of the request"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="description">Description</Label>
+          <TextArea
+            id="description"
+            value={form.description}
+            onChange={(value) =>
+              setForm({ ...form, description: value })
+            }
+            placeholder="Detailed rationale"
+            rows={4}
+          />
         </div>
 
         <div>
           <DatePicker
-            id="date-picker"
-            label="Date Picker Input"
-            placeholder="Select a date"
-            onChange={(dates, currentDateString) => {
-              // Handle your logic
-              console.log({ dates, currentDateString });
-            }}
+            id="requested-date"
+            label="Requested Date"
+            placeholder="When you need it by"
+            defaultDate={form.requestedDate}
+            onChange={(_, dateString) =>
+              setForm({ ...form, requestedDate: dateString })
+            }
           />
         </div>
 
         <div>
-          <Label htmlFor="tm">Time Picker Input</Label>
-          <div className="relative">
-            <Input
-              type="time"
-              id="tm"
-              name="tm"
-              onChange={(e) => console.log(e.target.value)}
-            />
-            <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
-              <TimeIcon className="size-6" />
-            </span>
-          </div>
+          <DatePicker
+            id="due-date"
+            label="Due Date"
+            placeholder="Project deadline (if different)"
+            defaultDate={form.dueDate}
+            onChange={(_, dateString) =>
+              setForm({ ...form, dueDate: dateString })
+            }
+          />
         </div>
+
         <div>
-          <Label htmlFor="tm">Input with Payment</Label>
-          <div className="relative">
-            <Input
-              type="text"
-              placeholder="Card number"
-              className="pl-[62px]"
-            />
-            <span className="absolute left-0 top-1/2 flex h-11 w-[46px] -translate-y-1/2 items-center justify-center border-r border-gray-200 dark:border-gray-800">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle cx="6.25" cy="10" r="5.625" fill="#E80B26" />
-                <circle cx="13.75" cy="10" r="5.625" fill="#F59D31" />
-                <path
-                  d="M10 14.1924C11.1508 13.1625 11.875 11.6657 11.875 9.99979C11.875 8.33383 11.1508 6.8371 10 5.80713C8.84918 6.8371 8.125 8.33383 8.125 9.99979C8.125 11.6657 8.84918 13.1625 10 14.1924Z"
-                  fill="#FC6020"
-                />
-              </svg>
-            </span>
-          </div>
+          <Label htmlFor="priority">Priority</Label>
+          <Select
+            id="priority"
+            options={priorityOptions}
+            defaultValue={form.priority}
+            placeholder="Select priority"
+            onChange={(value) =>
+              setForm({ ...form, priority: value })
+            }
+            className="dark:bg-dark-900"
+          />
         </div>
       </div>
     </ComponentCard>

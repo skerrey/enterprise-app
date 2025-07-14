@@ -6,12 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- <PackageReference Include="OpenAI" Version="2.2.0" /> -->
+    <PackageReference Include="OpenAI-DotNet" Version="8.8.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <!-- PATCH an implicit Content item rather than re‑Include it -->
   <ItemGroup>
     <Content Update="data\requests.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="data\cost-centers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="data\products.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

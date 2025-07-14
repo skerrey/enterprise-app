@@ -25,3 +25,7 @@ pnpm-debug.log*
 # --- System ---
 Thumbs.db
 .DS_Store
+
+
+# Ignore local config files
+**/appsettings.Development.json

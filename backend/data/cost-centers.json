@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "value": "CC100",
+    "label": "CC100--Marketing"
+  },
+  {
+    "id": 2,
+    "value": "CC200",
+    "label": "CC200--Finance"
+  },
+  {
+    "id": 3,
+    "value": "CC300",
+    "label": "CC300--IT"
+  }
+]

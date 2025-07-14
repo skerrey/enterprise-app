@@ -1,32 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
-namespace backend.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    private static readonly string dataPath =
+      Path.Combine(AppContext.BaseDirectory, "data", "products.json");
+
+    [HttpGet]
+    public IActionResult GetAll()
     {
-        [HttpGet]
-        public IActionResult GetAllProducts()
-        {
-            var products = new[]
-            {
-                new { Id = 1, Name = "Laptop", Price = 1299.99 },
-                new { Id = 2, Name = "Phone", Price = 799.99 },
-                new { Id = 3, Name = "Tablet", Price = 499.99 },
-                new { Id = 4, Name = "Smartwatch", Price = 199.99 },
-            };
+        if (!System.IO.File.Exists(dataPath))
+            return Ok(Array.Empty<object>());
 
-            var test = new[]
-            {
-                new { id = 1, label = "test 1" },
-                new { id = 2, label = "test 2" },
-                new { id = 3, label = "test 3" },
-            };
-
-            var testString = "testString";
-
-            return Ok(testString);
-        }
+        var json = System.IO.File.ReadAllText(dataPath);
+        var list = JsonSerializer.Deserialize<object[]>(json);
+        return Ok(list);
     }
 }

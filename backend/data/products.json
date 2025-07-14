@@ -1,12 +1,52 @@
 [
   {
     "id": 1,
-    "name": "Laptop",
+    "label": "Laptop",
     "price": 1299.99
   },
   {
     "id": 2,
-    "name": "Phone",
+    "label": "Phone",
     "price": 799.99
+  },
+  {
+    "id": 3,
+    "label": "Tablet",
+    "price": 499.99
+  },
+  {
+    "id": 4,
+    "label": "Monitor",
+    "price": 329.99
+  },
+  {
+    "id": 5,
+    "label": "Keyboard",
+    "price": 89.99
+  },
+  {
+    "id": 6,
+    "label": "Mouse",
+    "price": 49.99
+  },
+  {
+    "id": 7,
+    "label": "Headphones",
+    "price": 199.99
+  },
+  {
+    "id": 8,
+    "label": "Webcam",
+    "price": 79.99
+  },
+  {
+    "id": 9,
+    "label": "Printer",
+    "price": 249.99
+  },
+  {
+    "id": 10,
+    "label": "External Hard Drive",
+    "price": 119.99
   }
 ]

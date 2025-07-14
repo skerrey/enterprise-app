@@ -21,9 +21,9 @@ export default function RequestForm({ form, setForm }: RequestFormProps) {
   ];
 
   const priorityOptions = [
-    { value: "low", label: "Low" },
-    { value: "medium", label: "Medium" },
-    { value: "high", label: "High" },
+    { value: "low", label: "Low", color: "green" },
+    { value: "medium", label: "Medium", color: "yellow" },
+    { value: "high", label: "High", color: "red" },
   ];
 
   return (
@@ -157,7 +157,8 @@ export default function RequestForm({ form, setForm }: RequestFormProps) {
             onChange={(value) =>
               setForm({ ...form, priority: value })
             }
-            className="dark:bg-dark-900"
+            className={`dark:bg-dark-900
+              text-${priorityOptions.find(option => option.value === form.priority)?.color}-500`}
           />
         </div>
       </div>

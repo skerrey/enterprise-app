@@ -1,4 +1,6 @@
 
+using OpenAI;
+
 namespace backend
 {
     public class Program
@@ -6,6 +8,9 @@ namespace backend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddSingleton(sp =>
+              new OpenAIClient(builder.Configuration["OpenAI:ApiKey"]));
+            builder.Services.AddHttpClient();
 
 
             builder.Services.AddCors(options =>

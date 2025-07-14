@@ -6,11 +6,13 @@ import ProductSelection from "./components/ProductSelection";
 import Attachments from "./components/Attachments";
 import { Summary } from "./components/Summary";
 import { TForm } from "./types";
+import axios from "axios";
 
 const steps = ["Client Info", "Product Selection", "Attachments", "Review & Submit"];
 
 export default function NewRequestStepper() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [loadingMock, setLoadingMock] = useState(false);
   const [form, setForm] = useState<TForm>({
     requestorName: "",
     requestorEmail: "",
@@ -43,10 +45,54 @@ export default function NewRequestStepper() {
     }
   };
 
+  const generateFormData = async () => {
+    try {
+      setLoadingMock(true);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/GenerateFormData`);
+      const parsedData = JSON.parse(res.data);
+      setForm(parsedData);
+      console.log("Sample data generated:", parsedData);
+    } catch (error) {
+      console.error("Error fetching sample data:", error);
+    } finally {
+      setLoadingMock(false);
+    }
+  };
+
   return (
     <div>
       <PageMeta title="New Request Stepper" description="Multi-step form for new requests" />
       <PageBreadcrumb pageTitle="New Request" />
+
+      <div className="flex justify-end mb-1">
+        <div>
+          <button
+            type="button"
+            onClick={generateFormData}
+            className={`flex items-center justify-between -mt-5 text-sm mb-1 bg-indigo-500 text-white py-0.5 rounded hover:bg-indigo-600
+              ${loadingMock ? "cursor-not-allowed opacity-80  pr-4 pl-2" : " px-4"}`}
+            title="Generate Sample Data"
+            disabled={loadingMock}
+          >
+            {loadingMock && (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                className="animate-spin origin-center mr-1 -ml-1"
+              >
+                <path
+                  d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
+            <span>Autofill</span>
+          </button>
+          <div className="text-center text-xs italic">Powered by AI</div>
+        </div>
+      </div>
 
       <div className="flex flex-col lg:flex-row gap-2">
         {/* Stepper Navigation */}

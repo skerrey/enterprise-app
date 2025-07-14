@@ -10,7 +10,7 @@
   },
   {
     "id": 2,
-    "clientName": "Jane Smith",
+    "clientName": "Jane Smith", 
     "email": "jane@example.com",
     "selectedProduct": "Phone",
     "notes": "Please include charger.",

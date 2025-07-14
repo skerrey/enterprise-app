@@ -1,22 +1,12 @@
 
+import { useEffect, useState } from "react";
 import ComponentCard from "../../../components/common/ComponentCard";
 import Label from "../../../components/form/Label";
 import Input from "../../../components/form/input/InputField";
 import Select from "../../../components/form/Select";
 import MultiSelect from "../../../components/form/MultiSelect";
 import { TForm, TProduct } from "../types";
-
-const catalog = [
-  { label: "Product 1", unitPrice: 99.99 },
-  { label: "Product 2", unitPrice: 149.50 },
-  { label: "Product 3", unitPrice: 29.00 },
-];
-
-const costCenterOptions = [
-  { value: "CC100", label: "CC100 – Marketing" },
-  { value: "CC200", label: "CC200 – Finance" },
-  { value: "CC300", label: "CC300 – IT" },
-];
+import axios from "axios";
 
 type Props = {
   form: TForm;
@@ -24,19 +14,49 @@ type Props = {
 };
 
 export default function ProductSelection({ form, setForm }: Props) {
+  const [catalog, setCatalog] = useState<{ label: string; price: number }[]>([]);
+  const [costCenters, setCostCenters] = useState<{ value: string; label: string }[]>([]);
+
   const selectedLabels = form.products.map((p) => p.label);
+
+  const getCatalog = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/Products`);
+      setCatalog(res.data);
+    } catch (error) {
+      console.error("Error fetching catalog data:", error);
+    }
+  };
+
+  console.log("Catalog:", catalog);
+
+  const getCostCenters = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/CostCenters`);
+      const parsedData = JSON.parse(res.data);
+      setCostCenters(parsedData);
+    } catch (error) {
+      console.error("Error fetching cost centers data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getCatalog();
+    getCostCenters();
+  }, []);
 
   // Handle product selection changes
   const onProductsChange = (labels: string[]) => {
+    if (!catalog || !costCenters) return;
     const newProducts: TProduct[] = labels.map((label) => {
       const existing = form.products.find((p) => p.label === label);
       const quantity = existing?.quantity ?? 1;
-      const unitPrice = catalog.find((c) => c.label === label)!.unitPrice;
+      const price = catalog.find((c) => c.label === label)!.price;
       return {
         label,
         quantity,
-        unitPrice,
-        totalPrice: unitPrice * quantity,
+        price,
+        total: price * quantity, // Changed from unitPrice to price, totalPrice to total
       };
     });
     setForm({ ...form, products: newProducts });
@@ -46,11 +66,15 @@ export default function ProductSelection({ form, setForm }: Props) {
   const updateQty = (label: string, qty: number) => {
     const updated = form.products.map((p) =>
       p.label === label
-        ? { ...p, quantity: qty, totalPrice: qty * p.unitPrice }
+        ? { ...p, quantity: qty, total: qty * p.price } // Changed totalPrice to total
         : p
     );
     setForm({ ...form, products: updated });
   };
+
+  if (!catalog || !costCenters) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <ComponentCard title="Product Selection">
@@ -89,8 +113,8 @@ export default function ProductSelection({ form, setForm }: Props) {
                     }
                   />
                 </div>
-                <div className="w-1/6">${p.unitPrice.toFixed(2)}</div>
-                <div className="w-1/6">${p.totalPrice.toFixed(2)}</div>
+                <div className="w-1/6">${p.price.toFixed(2)}</div>
+                <div className="w-1/6">${p.total.toFixed(2)}</div>
               </div>
             ))}
           </div>
@@ -112,7 +136,10 @@ export default function ProductSelection({ form, setForm }: Props) {
           <Label htmlFor="cost-center">Cost Center</Label>
           <Select
             id="cost-center"
-            options={costCenterOptions}
+            options={costCenters.map((c) => ({
+              value: c.value,
+              label: c.label, 
+            }))}
             defaultValue={form.costCenter}
             placeholder="Select cost center"
             onChange={(v) => setForm({ ...form, costCenter: v })}

@@ -1,8 +1,8 @@
 type TProduct = {
   label: string;
   quantity: number;
-  unitPrice: number;
-  totalPrice: number;
+  price: number;
+  total: number;
 };
 
 type TForm = {

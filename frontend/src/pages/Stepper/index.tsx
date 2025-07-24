@@ -185,17 +185,16 @@ export default function NewRequestStepper() {
               }`}
             >
               <button
-  onClick={() => {
-    if (index <= currentStep) {
-      setCurrentStep(index);
-    } else {
-      if (advanceStep()) {
-        setCurrentStep(index);
-      }
-    }
-  }}
-  disabled={index > currentStep}
-        
+                onClick={() => {
+                  if (index <= currentStep) {
+                    setCurrentStep(index);
+                  } else {
+                    if (advanceStep()) {
+                      setCurrentStep(index);
+                    }
+                  }
+                }}
+                disabled={index > currentStep}
                 className="flex items-center font-medium w-full group"
               >
                 <span
@@ -260,7 +259,7 @@ export default function NewRequestStepper() {
                 if (currentStep === steps.length - 1) {
                   submitForm();
                 } else {
-                  if (advanceStep()) { // Add validation check
+                  if (advanceStep()) {
                     setCurrentStep((s) => s + 1);
                   }
                 }

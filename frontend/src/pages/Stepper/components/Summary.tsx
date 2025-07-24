@@ -103,8 +103,8 @@ export function Summary({ form }: SummaryProps) {
                 <div key={p.label} className="grid grid-cols-12 items-center space-x-4">
                   <div className="col-span-4">{p.label}</div>
                   <div className="col-span-2">{p.quantity}</div>
-                  <div className="col-span-2">${p.unitPrice.toFixed(2)}</div>
-                  <div className="col-span-2">${p.totalPrice.toFixed(2)}</div>
+                  <div className="col-span-2">${p.price.toFixed(2)}</div>
+                  <div className="col-span-2">${p.total.toFixed(2)}</div>
                 </div>
               ))}
             </div>
@@ -129,7 +129,9 @@ export function Summary({ form }: SummaryProps) {
             <h3 className="text-xl font-semibold mb-2">Attachments</h3>
             <ul className="list-disc list-inside">
               {attachments.map((file, i) => (
-                <li key={i}>{file.name}</li>
+                <li key={i} className="text-gray-500">
+                  <span className="text-blue-500 hover:underline hover:cursor-pointer">{file.name}</span>
+                </li>
               ))}
             </ul>
           </div>

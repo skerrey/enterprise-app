@@ -31,8 +31,8 @@ export default function Attachments({ form, setForm }: Props) {
         {form.attachments.length > 0 && (
           <ul className="list-disc list-inside pt-2">
             {form.attachments.map((file, i) => (
-              <li key={i} className="text-sm text-gray-700 dark:text-gray-400">
-                {file.name}
+              <li key={i} className="text-gray-500">
+                <span className="text-blue-500 hover:underline hover:cursor-pointer">{file.name}</span>
               </li>
             ))}
           </ul>

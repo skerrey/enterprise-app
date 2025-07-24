@@ -13,24 +13,24 @@ type RequestFormProps = {
   setForm: (form: TForm) => void;
 };
 
-export default function RequestForm({ form, setForm }: RequestFormProps) {
+export default function ClientInfo({ form, setForm }: RequestFormProps) {
   const departmentOptions = [
-    { value: "engineering", label: "Engineering" },
-    { value: "marketing", label: "Marketing" },
-    { value: "finance", label: "Finance" },
+    { id: 1, value: "engineering", label: "Engineering" },
+    { id: 2, value: "marketing", label: "Marketing" },
+    { id: 3, value: "finance", label: "Finance" },
   ];
 
   const priorityOptions = [
-    { value: "low", label: "Low", color: "green" },
-    { value: "medium", label: "Medium", color: "yellow" },
-    { value: "high", label: "High", color: "red" },
+    { id: 1, value: "low", label: "Low", color: "green" },
+    { id: 2, value: "medium", label: "Medium", color: "yellow" },
+    { id: 3, value: "high", label: "High", color: "red" },
   ];
 
   return (
     <ComponentCard title="Service Request">
       <div className="space-y-4">
         <div>
-          <Label htmlFor="requestor-name">Requestor Name</Label>
+          <Label htmlFor="requestor-name" required>Requestor Name</Label>
           <Input
             id="requestor-name"
             type="text"
@@ -43,7 +43,7 @@ export default function RequestForm({ form, setForm }: RequestFormProps) {
         </div>
 
         <div>
-          <Label htmlFor="requestor-email">Requestor Email</Label>
+          <Label htmlFor="requestor-email" required>Requestor Email</Label>
           <Input
             id="requestor-email"
             type="email"
@@ -144,6 +144,7 @@ export default function RequestForm({ form, setForm }: RequestFormProps) {
             onChange={(_, dateString) =>
               setForm({ ...form, dueDate: dateString })
             }
+            required
           />
         </div>
 

@@ -3,6 +3,19 @@ layer(base);
 
 @import "tailwindcss";
 
+@keyframes fadeInRight {
+  0% {
+    transform: translateX(500px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.fade-in-right {
+  animation: fadeInRight 0.8s ease-out forwards;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {

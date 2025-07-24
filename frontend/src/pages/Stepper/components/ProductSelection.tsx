@@ -7,6 +7,7 @@ import Select from "../../../components/form/Select";
 import MultiSelect from "../../../components/form/MultiSelect";
 import { TForm, TProduct } from "../types";
 import axios from "axios";
+import { CloseIcon } from "../../../icons";
 
 type Props = {
   form: TForm;
@@ -15,9 +16,27 @@ type Props = {
 
 export default function ProductSelection({ form, setForm }: Props) {
   const [catalog, setCatalog] = useState<{ label: string; price: number }[]>([]);
-  const [costCenters, setCostCenters] = useState<{ value: string; label: string }[]>([]);
+  // const [costCenters, setCostCenters] = useState<{ value: string; label: string }[]>([]);
 
   const selectedLabels = form.products.map((p) => p.label);
+
+  const costCenters = [
+  {
+    "id": 1,
+    "value": "CC100",
+    "label": "CC100--Marketing"
+  },
+  {
+    "id": 2,
+    "value": "CC200",
+    "label": "CC200--Finance"
+  },
+  {
+    "id": 3,
+    "value": "CC300",
+    "label": "CC300--IT"
+  }
+]
 
   const getCatalog = async () => {
     try {
@@ -28,21 +47,8 @@ export default function ProductSelection({ form, setForm }: Props) {
     }
   };
 
-  console.log("Catalog:", catalog);
-
-  const getCostCenters = async () => {
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/CostCenters`);
-      const parsedData = JSON.parse(res.data);
-      setCostCenters(parsedData);
-    } catch (error) {
-      console.error("Error fetching cost centers data:", error);
-    }
-  };
-
   useEffect(() => {
     getCatalog();
-    getCostCenters();
   }, []);
 
   // Handle product selection changes
@@ -99,6 +105,7 @@ export default function ProductSelection({ form, setForm }: Props) {
               <div className="w-1/6">Quantity</div>
               <div className="w-1/6">Unit Price</div>
               <div className="w-1/6">Total Price</div>
+              <div className="w-1/6 flex justify-end">Remove</div>
             </div>
             {form.products.map((p) => (
               <div key={p.label} className="flex items-center space-x-4">
@@ -115,6 +122,20 @@ export default function ProductSelection({ form, setForm }: Props) {
                 </div>
                 <div className="w-1/6">${p.price.toFixed(2)}</div>
                 <div className="w-1/6">${p.total.toFixed(2)}</div>
+                <div className="w-1/6 flex justify-end">
+                  <button
+                    type="button"
+                    className="text-red-500 hover:text-red-700 mr-5"
+                    onClick={() =>
+                      setForm({
+                        ...form,
+                        products: form.products.filter((prod) => prod.label !== p.label),
+                      })
+                    }
+                  >
+                    <CloseIcon className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             ))}
           </div>

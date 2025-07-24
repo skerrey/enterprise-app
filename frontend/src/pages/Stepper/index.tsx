@@ -7,12 +7,15 @@ import Attachments from "./components/Attachments";
 import { Summary } from "./components/Summary";
 import { TForm } from "./types";
 import axios from "axios";
+import Badge from "../../components/ui/badge/Badge";
 
 const steps = ["Client Info", "Product Selection", "Attachments", "Review & Submit"];
 
 export default function NewRequestStepper() {
   const [currentStep, setCurrentStep] = useState(0);
   const [loadingMock, setLoadingMock] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [badgeMessage, setBadgeMessage] = useState("");
   const [form, setForm] = useState<TForm>({
     requestorName: "",
     requestorEmail: "",
@@ -29,6 +32,21 @@ export default function NewRequestStepper() {
     costCenter: "",
     attachments: []
   });
+
+  const submitForm = async () => {
+    try {
+      setSending(true);
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_API}/api/Requests`, form);
+      console.log("Form submitted successfully:", res.data);
+      alert("Request submitted successfully!");
+      // Optionally reset form or redirect
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Error submitting request. Please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   const renderStepContent = () => {
     switch (currentStep) {
@@ -59,10 +77,58 @@ export default function NewRequestStepper() {
     }
   };
 
+  const advanceStep = () => {
+    setBadgeMessage("");
+    switch (currentStep) {
+      case 0:
+        if (!form.requestorName || !form.requestorEmail || !form.dueDate) {
+          showBadgeMessage("Please fill out all required fields in Client Info.");
+          return false; 
+        }
+        break;
+      case 1:
+        if (form.products.length === 0) {
+          showBadgeMessage("Please select at least one product.");
+          return false; 
+        }
+        break;
+      case 2:
+        if (form.attachments.length === 0) {
+          showBadgeMessage("Please upload at least one attachment.");
+          return false; 
+        }
+        break;
+      case 3:
+        if (!form.requestTitle || !form.description) {
+          showBadgeMessage("Please fill out all required fields in Review & Submit.");
+          return false; 
+        }
+        break;
+      default:
+        return true;
+    }
+    return true; 
+  };
+
+  const showBadgeMessage = (message: string) => {
+    setBadgeMessage(message);
+    setTimeout(() => {
+      setBadgeMessage("");
+    }, 5000); 
+  };
+
+
   return (
     <div>
       <PageMeta title="New Request Stepper" description="Multi-step form for new requests" />
       <PageBreadcrumb pageTitle="New Request" />
+      {badgeMessage && (
+        <div className="fixed bottom-4 right-4 z-50 fade-in-right">
+          <Badge variant="notification" color="error" size="md">
+            {badgeMessage}
+          </Badge>
+        </div>
+      )}
 
       <div className="flex justify-end mb-1">
         <div>
@@ -119,7 +185,17 @@ export default function NewRequestStepper() {
               }`}
             >
               <button
-                onClick={() => setCurrentStep(index)}
+  onClick={() => {
+    if (index <= currentStep) {
+      setCurrentStep(index);
+    } else {
+      if (advanceStep()) {
+        setCurrentStep(index);
+      }
+    }
+  }}
+  disabled={index > currentStep}
+        
                 className="flex items-center font-medium w-full group"
               >
                 <span
@@ -180,11 +256,21 @@ export default function NewRequestStepper() {
               Back
             </button>
             <button
-              disabled={currentStep === steps.length - 1}
-              onClick={() => setCurrentStep((s) => s + 1)}
-              className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50"
+              onClick={() => {
+                if (currentStep === steps.length - 1) {
+                  submitForm();
+                } else {
+                  if (advanceStep()) { // Add validation check
+                    setCurrentStep((s) => s + 1);
+                  }
+                }
+              }}
+              disabled={sending}
+              className={`px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50
+                ${loadingMock ? "cursor-not-allowed opacity-80" : ""}`}
             >
-              Next
+              {loadingMock && currentStep === steps.length - 1 ? "Submitting..." : 
+              currentStep === steps.length - 1 ? "Submit" : "Next"}
             </button>
           </div>
         </div>

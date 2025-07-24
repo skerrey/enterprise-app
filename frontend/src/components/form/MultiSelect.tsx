@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Option {
   value: string;
@@ -21,9 +21,12 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   onChange,
   disabled = false,
 }) => {
-  const [selectedOptions, setSelectedOptions] =
-    useState<string[]>(defaultSelected);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(defaultSelected);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setSelectedOptions(defaultSelected);
+  }, [defaultSelected]);
 
   const toggleDropdown = () => {
     if (!disabled) setIsOpen((prev) => !prev);
@@ -135,10 +138,14 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
             >
               <div className="flex flex-col">
                 {options.map((option, index) => (
-                  <div
+                  <button
                     key={index}
-                    className={`hover:bg-primary/5 w-full cursor-pointer rounded-t border-b border-gray-200 dark:border-gray-800`}
+                    className={`
+                      hover:bg-primary/5 w-full rounded-t border-b border-gray-200 dark:border-gray-800
+                      ${selectedOptions.includes(option.value) ? "bg-gray-200 cursor-not-allowed" : "cursor-pointer "}
+                    `}
                     onClick={() => handleSelect(option.value)}
+                    disabled={selectedOptions.includes(option.value) || disabled}
                   >
                     <div
                       className={`relative flex w-full items-center p-2 pl-2 ${
@@ -151,7 +158,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                         {option.text}
                       </div>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>

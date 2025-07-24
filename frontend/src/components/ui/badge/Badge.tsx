@@ -1,4 +1,4 @@
-type BadgeVariant = "light" | "solid";
+type BadgeVariant = "light" | "solid" | "notification"; 
 type BadgeSize = "sm" | "md";
 type BadgeColor =
   | "primary"
@@ -16,6 +16,7 @@ interface BadgeProps {
   startIcon?: React.ReactNode; // Icon at the start
   endIcon?: React.ReactNode; // Icon at the end
   children: React.ReactNode; // Badge content
+  className?: string; // Additional classes for customization
 }
 
 const Badge: React.FC<BadgeProps> = ({
@@ -25,9 +26,10 @@ const Badge: React.FC<BadgeProps> = ({
   startIcon,
   endIcon,
   children,
+  className = "",
 }) => {
   const baseStyles =
-    "inline-flex items-center px-2.5 py-0.5 justify-center gap-1 rounded-full font-medium";
+    "inline-flex items-center p-4 justify-center gap-1 rounded-sm font-medium shadow-md";
 
   // Define size styles
   const sizeStyles = {
@@ -59,6 +61,17 @@ const Badge: React.FC<BadgeProps> = ({
       light: "bg-gray-400 dark:bg-white/5 text-white dark:text-white/80",
       dark: "bg-gray-700 text-white dark:text-white",
     },
+
+    // make it a border lefft is the color and bg white
+    notification: {
+      primary: "border-l-2 border-brand-500 bg-white text-brand-500 dark:bg-gray-800 dark:text-white",
+      success: "border-l-2 border-success-500 bg-white text-success-500 dark:bg-gray-800 dark:text-white",
+      error: "border-l-2 border-error-500 bg-white text-error-500 dark:bg-gray-800 dark:text-white",
+      warning: "border-l-2 border-warning-500 bg-white text-warning-500 dark:bg-gray-800 dark:text-white",
+      info: "border-l-2 border-blue-light-500 bg-white text-blue-light-500 dark:bg-gray-800 dark:text-white",
+      light: "border-l-2 border-gray-300 bg-white text-gray-700 dark:bg-gray-800 dark:text-white/80",
+      dark: "border-l-2 border-gray-600 bg-white text-gray-700 dark:bg-gray-800 dark:text-white",
+    }
   };
 
   // Get styles based on size and color variant
@@ -66,7 +79,7 @@ const Badge: React.FC<BadgeProps> = ({
   const colorStyles = variants[variant][color];
 
   return (
-    <span className={`${baseStyles} ${sizeClass} ${colorStyles}`}>
+    <span className={`${baseStyles} ${sizeClass} ${colorStyles} ${className}`}>
       {startIcon && <span className="mr-1">{startIcon}</span>}
       {children}
       {endIcon && <span className="ml-1">{endIcon}</span>}

@@ -33,6 +33,28 @@ namespace backend.Controllers
                 // Initialize random number generator
                 var random = new Random();
 
+                // Select random department and priority (1-3)
+                var selectedDepartmentId = random.Next(1, 4); // 1-3
+                var selectedPriorityId = random.Next(1, 4); // 1-3
+
+                // Map IDs to values
+                var departmentMap = new Dictionary<int, string>
+                {
+                    { 1, "engineering" },
+                    { 2, "marketing" },
+                    { 3, "finance" }
+                };
+
+                var priorityMap = new Dictionary<int, string>
+                {
+                    { 1, "low" },
+                    { 2, "medium" },
+                    { 3, "high" }
+                };
+
+                var selectedDepartment = departmentMap[selectedDepartmentId];
+                var selectedPriority = priorityMap[selectedPriorityId];
+
                 // Select 1 random cost center
                 var selectedCostCenter = availableCostCenters[random.Next(availableCostCenters.Length)];
 
@@ -40,10 +62,15 @@ namespace backend.Controllers
                 var selectedProducts = availableProducts
                     .OrderBy(x => random.Next())
                     .Take(3)
-                    .Select(p => new
-                    {
-                        quantity = random.Next(1, 4), // 1-3 quantity
-                        total = p.price * random.Next(1, 4) // Will be recalculated in prompt
+                    .Select(p => {
+                        var qty = random.Next(1, 4); // Generate quantity once
+                        return new
+                        {
+                            label = p.label,
+                            quantity = qty,
+                            price = p.price,
+                            total = p.price * qty // Use same quantity for total
+                        };
                     })
                     .ToArray();
 
@@ -79,13 +106,21 @@ namespace backend.Controllers
                 Generate a JSON object that matches the following TypeScript type definition:
                 {typeDef}
                 
-                IMPORTANT: Use exactly these products (do not change the product details):
+                IMPORTANT: Use exactly these products with their quantities, prices, and totals:
                 {productsForPrompt}
 
-                IMPORTANT: Use exactly this cost center value: ""{selectedCostCenter.value}""
-                
-                For each product, make sure totalPrice = quantity * unitPrice.
-                Generate realistic values for all other fields. The budget should be at least the sum of all product totalPrices.
+                IMPORTANT: Use exactly these values:
+                - department: ""{selectedDepartment}""
+                - priority: ""{selectedPriority}"" 
+                - costCenter: ""{selectedCostCenter.value}""
+
+                Generate realistic values for all other fields (requestorName, requestorEmail, employeeID, requestTitle, description, requestedDate, etc.). 
+                Set budget to at least the sum of all product totals.
+
+                IMPORTANT: For attachments, generate 1-3 realistic file names that MUST end with .pdf, .png, or .jpg extensions only.
+                Examples: ""invoice_2024.pdf"", ""receipt_scan.jpg"", ""approval_form.pdf"", ""product_image.png""
+
+
                 Do not include any additional text or explanations, just the JSON object.";
 
                 // Create the chat request

@@ -1,11 +1,22 @@
-﻿namespace backend.Models
+﻿using System.Text.Json.Serialization;
+
+namespace backend.Models
 {
     public class Product
     {
-        public int id { get; set; }
-        public string label { get; set; }
-        public decimal price { get; set; }
-        public int quantity { get; set; } 
-        public decimal total { get; set; }
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [JsonPropertyName("label")]
+        public string Label { get; set; } = "";
+
+        [JsonPropertyName("price")]
+        public decimal Price { get; set; }
+
+        [JsonPropertyName("quantity")]
+        public int Quantity { get; set; }
+
+        [JsonPropertyName("total")]
+        public decimal Total { get; set; }
     }
 }

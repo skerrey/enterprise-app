@@ -6,9 +6,9 @@ import { Link } from "react-router";
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
 
-  function toggleDropdown() {
-    setIsOpen(!isOpen);
-  }
+  // function toggleDropdown() {
+  //   setIsOpen(!isOpen);
+  // }
 
   function closeDropdown() {
     setIsOpen(false);
@@ -16,15 +16,16 @@ export default function UserDropdown() {
   return (
     <div className="relative">
       <button
-        onClick={toggleDropdown}
+        // onClick={toggleDropdown}
         className="flex items-center text-gray-700 dropdown-toggle dark:text-gray-400"
       >
         <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
-          <img src="/images/user/owner.jpg" alt="User" />
+          {/* Picture from Pixabay by WandererCreative */}
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="User" />
         </span>
 
-        <span className="block mr-1 font-medium text-theme-sm">NAME GOES HERE</span>
-        <svg
+        <span className="block mr-1 font-medium text-theme-sm">USER</span>
+        {/* <svg
           className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
@@ -41,7 +42,7 @@ export default function UserDropdown() {
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-        </svg>
+        </svg> */}
       </button>
 
       <Dropdown
@@ -51,10 +52,10 @@ export default function UserDropdown() {
       >
         <div>
           <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-            Musharof Chowdhury
+            User
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-            randomuser@pimjo.com
+            user@mail.com
           </span>
         </div>
 

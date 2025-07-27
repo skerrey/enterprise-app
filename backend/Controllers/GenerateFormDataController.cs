@@ -66,10 +66,10 @@ namespace backend.Controllers
                         var qty = random.Next(1, 4); // Generate quantity once
                         return new
                         {
-                            label = p.label,
+                            label = p.Label,
                             quantity = qty,
-                            price = p.price,
-                            total = p.price * qty // Use same quantity for total
+                            price = p.Price,
+                            total = p.Price * qty // Use same quantity for total
                         };
                     })
                     .ToArray();
@@ -113,6 +113,11 @@ namespace backend.Controllers
                 - department: ""{selectedDepartment}""
                 - priority: ""{selectedPriority}"" 
                 - costCenter: ""{selectedCostCenter.value}""
+
+                CRITICAL: Generate completely UNIQUE and VARIED names and emails each time:
+                - requestorName: Use diverse, realistic full names from different cultures/backgrounds (e.g., ""Elena Rodriguez"", ""Marcus Chen"", ""Priya Patel"", ""James O'Connor"", ""Fatima Al-Zahra"")
+                - requestorEmail: Create professional emails that match the names (firstname.lastname@company.com format)
+                - employeeID: Generate a unique employee ID (format: EMP + 3-4 random digits)
 
                 Generate realistic values for all other fields (requestorName, requestorEmail, employeeID, requestTitle, description, requestedDate, etc.). 
                 Set budget to at least the sum of all product totals.

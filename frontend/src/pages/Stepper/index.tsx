@@ -7,7 +7,8 @@ import Attachments from "./components/Attachments";
 import { Summary } from "./components/Summary";
 import { TForm } from "./types";
 import axios from "axios";
-import Badge from "../../components/ui/badge/Badge";
+import { useNotification } from "../../context/NotificationContext";
+import { useNavigate } from "react-router";
 
 const steps = ["Client Info", "Product Selection", "Attachments", "Review & Submit"];
 
@@ -15,7 +16,6 @@ export default function NewRequestStepper() {
   const [currentStep, setCurrentStep] = useState(0);
   const [loadingMock, setLoadingMock] = useState(false);
   const [sending, setSending] = useState(false);
-  const [badgeMessage, setBadgeMessage] = useState("");
   const [form, setForm] = useState<TForm>({
     requestorName: "",
     requestorEmail: "",
@@ -33,16 +33,33 @@ export default function NewRequestStepper() {
     attachments: []
   });
 
+  const { showNotification } = useNotification();
+  const navigate = useNavigate();
+
   const submitForm = async () => {
     try {
       setSending(true);
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_API}/api/Requests`, form);
-      console.log("Form submitted successfully:", res.data);
-      alert("Request submitted successfully!");
-      // Optionally reset form or redirect
+      await axios.post(`${import.meta.env.VITE_BACKEND_API}/api/Requests`, form);
+      
+      showNotification("Form submitted successfully!", {
+        variant: "notification",
+        color: "success",
+        size: "md",
+        timeout: 5000
+      });
+
+      setTimeout(() => {
+        navigate("/approvals");
+      }, 2000);
+
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Error submitting request. Please try again.");
+      showNotification("Error submitting form. Please try again.", {
+        variant: "notification",
+        color: "error",
+        size: "md",
+        timeout: 5000
+      });
     } finally {
       setSending(false);
     }
@@ -69,7 +86,6 @@ export default function NewRequestStepper() {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/GenerateFormData`);
       const parsedData = JSON.parse(res.data);
       setForm(parsedData);
-      console.log("Sample data generated:", parsedData);
     } catch (error) {
       console.error("Error fetching sample data:", error);
     } finally {
@@ -77,44 +93,52 @@ export default function NewRequestStepper() {
     }
   };
 
-  const advanceStep = () => {
-    setBadgeMessage("");
-    switch (currentStep) {
+  const advanceStep = async (step: number) => {
+    let canAdvance = true;
+    switch (step) {
       case 0:
-        if (!form.requestorName || !form.requestorEmail || !form.dueDate) {
-          showBadgeMessage("Please fill out all required fields in Client Info.");
-          return false; 
-        }
+        canAdvance = true;
         break;
       case 1:
-        if (form.products.length === 0) {
-          showBadgeMessage("Please select at least one product.");
-          return false; 
+        if (!form.requestorName || !form.requestorEmail || !form.requestedDate) {
+          showBadgeMessage("Please fill out all required fields in Client Info.");
+          canAdvance = false;
         }
         break;
       case 2:
-        if (form.attachments.length === 0) {
-          showBadgeMessage("Please upload at least one attachment.");
-          return false; 
+        if (!form.requestorName || !form.requestorEmail || !form.requestedDate || form.products.length === 0) {
+          if (!form.requestorName || !form.requestorEmail || !form.requestedDate) {
+            showBadgeMessage("Please fill out all required fields in Client Info.");
+          } else if (!form.products || form.products.length === 0) {
+            showBadgeMessage("Please select at least one product.");
+          }
+          canAdvance = false;
         }
         break;
       case 3:
-        if (!form.requestTitle || !form.description) {
-          showBadgeMessage("Please fill out all required fields in Review & Submit.");
-          return false; 
+        if (!form.requestorName || !form.requestorEmail || !form.requestedDate || form.products.length === 0) {
+          if (!form.requestorName || !form.requestorEmail || !form.requestedDate) {
+            showBadgeMessage("Please fill out all required fields in Client Info.");
+          } else if (!form.products || form.products.length === 0) {
+            showBadgeMessage("Please select at least one product.");
+          }
+          canAdvance = false;
         }
         break;
       default:
-        return true;
+        canAdvance = true;
     }
-    return true; 
+
+    return canAdvance;
   };
 
   const showBadgeMessage = (message: string) => {
-    setBadgeMessage(message);
-    setTimeout(() => {
-      setBadgeMessage("");
-    }, 5000); 
+    showNotification(message, {
+      variant: "notification",
+      color: "error",
+      size: "md",
+      timeout: 5000
+    });
   };
 
 
@@ -122,13 +146,20 @@ export default function NewRequestStepper() {
     <div>
       <PageMeta title="New Request Stepper" description="Multi-step form for new requests" />
       <PageBreadcrumb pageTitle="New Request" />
-      {badgeMessage && (
-        <div className="fixed bottom-4 right-4 z-50 fade-in-right">
+      {/* {badgeMessage && (
+        <div 
+          className="fixed bottom-4 right-4 z-50 fade-in-right" 
+          onAnimationEnd={() => 
+            setTimeout(() => {
+              setBadgeMessage("");
+            }, 5000)
+          }
+        >
           <Badge variant="notification" color="error" size="md">
             {badgeMessage}
           </Badge>
         </div>
-      )}
+      )} */}
 
       <div className="flex justify-end mb-1">
         <div>
@@ -185,16 +216,12 @@ export default function NewRequestStepper() {
               }`}
             >
               <button
-                onClick={() => {
-                  if (index <= currentStep) {
+                onClick={async() => {
+                  const canAdvance = await advanceStep(index);
+                  if (canAdvance) {
                     setCurrentStep(index);
-                  } else {
-                    if (advanceStep()) {
-                      setCurrentStep(index);
-                    }
                   }
                 }}
-                disabled={index > currentStep}
                 className="flex items-center font-medium w-full group"
               >
                 <span
@@ -255,11 +282,14 @@ export default function NewRequestStepper() {
               Back
             </button>
             <button
-              onClick={() => {
-                if (currentStep === steps.length - 1) {
-                  submitForm();
-                } else {
-                  if (advanceStep()) {
+              onClick={async () => {
+                const canAdvance = await advanceStep(currentStep);
+                if (canAdvance) {
+                  if (currentStep === steps.length - 1) {
+                    setSending(true);
+                    await submitForm();
+                    setSending(false);
+                  } else {
                     setCurrentStep((s) => s + 1);
                   }
                 }

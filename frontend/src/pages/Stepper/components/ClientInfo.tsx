@@ -132,6 +132,7 @@ export default function ClientInfo({ form, setForm }: RequestFormProps) {
             onChange={(_, dateString) =>
               setForm({ ...form, requestedDate: dateString })
             }
+            required
           />
         </div>
 
@@ -144,7 +145,6 @@ export default function ClientInfo({ form, setForm }: RequestFormProps) {
             onChange={(_, dateString) =>
               setForm({ ...form, dueDate: dateString })
             }
-            required
           />
         </div>
 

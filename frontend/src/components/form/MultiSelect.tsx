@@ -12,6 +12,7 @@ interface MultiSelectProps {
   defaultSelected?: string[];
   onChange?: (selected: string[]) => void;
   disabled?: boolean;
+  required?: boolean;
 }
 
 const MultiSelect: React.FC<MultiSelectProps> = ({
@@ -20,6 +21,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   defaultSelected = [],
   onChange,
   disabled = false,
+  required = false,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(defaultSelected);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +55,10 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 
   return (
     <div className="w-full">
-      <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+      <label className={`
+        mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400
+        ${required ? "after:content-['*'] after:text-red-500 after:ml-0.5" : ""}
+      `}>
         {label}
       </label>
 

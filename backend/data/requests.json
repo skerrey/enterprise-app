@@ -1,20 +1,306 @@
 [
   {
     "id": 1,
-    "clientName": "John Doe",
-    "email": "john@example.com",
-    "selectedProduct": "Laptop",
-    "notes": "Urgent delivery needed.",
-    "attachmentUrl": "",
-    "createdAt": "2024-06-01T12:00:00Z"
+    "requestorName": "John Smith",
+    "requestorEmail": "john.smith@company.com",
+    "department": "IT Department",
+    "employeeID": "EMP001",
+    "onBehalfOf": "Sarah Johnson",
+    "requestTitle": "New Laptop Setup for Remote Work",
+    "description": "Need a high-performance laptop for software development work. Will be used primarily for coding, virtual meetings, and document creation.",
+    "requestedDate": "2024-07-28",
+    "dueDate": "2024-08-15",
+    "priority": "High",
+    "products": [
+      {
+        "id": 1,
+        "label": "Dell XPS 15",
+        "price": 1899.99,
+        "quantity": 1,
+        "total": 1899.99
+      },
+      {
+        "id": 2,
+        "label": "Wireless Mouse",
+        "price": 49.99,
+        "quantity": 1,
+        "total": 49.99
+      }
+    ],
+    "budget": 2000.00,
+    "costCenter": "IT-HARDWARE-2024",
+    "attachments": [
+      {
+        "name": "laptop_specifications.pdf",
+        "url": "https://example.com/files/laptop_specs.pdf",
+        "size": 245760
+      }
+    ],
+    "createdAt": "2024-12-12T14:30:00Z"
   },
   {
     "id": 2,
-    "clientName": "Jane Smith", 
-    "email": "jane@example.com",
-    "selectedProduct": "Phone",
-    "notes": "Please include charger.",
-    "attachmentUrl": "",
-    "createdAt": "2024-06-02T15:30:00Z"
+    "requestorName": "Maria Garcia",
+    "requestorEmail": "maria.garcia@company.com",
+    "department": "Marketing",
+    "employeeID": "EMP002",
+    "onBehalfOf": "",
+    "requestTitle": "Office Furniture for New Team Members",
+    "description": "We are expanding our marketing team and need ergonomic office furniture for 3 new hires starting next month.",
+    "requestedDate": "2024-07-29",
+    "dueDate": "2024-08-20",
+    "priority": "Medium",
+    "products": [
+      {
+        "id": 3,
+        "label": "Standing Desk",
+        "price": 599.99,
+        "quantity": 3,
+        "total": 1799.97
+      },
+      {
+        "id": 4,
+        "label": "Ergonomic Office Chair",
+        "price": 349.99,
+        "quantity": 3,
+        "total": 1049.97
+      },
+      {
+        "id": 5,
+        "label": "24-inch Monitor",
+        "price": 279.99,
+        "quantity": 3,
+        "total": 839.97
+      }
+    ],
+    "budget": 3750.00,
+    "costCenter": "MKT-FURNITURE-2024",
+    "attachments": [
+      {
+        "name": "office_layout_plan.jpg",
+        "url": "https://example.com/files/office_layout.jpg",
+        "size": 512000
+      },
+      {
+        "name": "team_expansion_approval.pdf",
+        "url": "https://example.com/files/approval.pdf",
+        "size": 128000
+      }
+    ],
+    "createdAt": "2025-01-22T09:15:00Z"
+  },
+  {
+    "id": 3,
+    "requestorName": "Jane Sampson",
+    "requestorEmail": "janesampson@example.com",
+    "department": "engineering",
+    "employeeID": "E12345",
+    "onBehalfOf": null,
+    "requestTitle": "Office Supplies Purchase Request",
+    "description": "Requesting approval to purchase necessary office supplies for the engineering team.",
+    "requestedDate": "2022-09-15",
+    "dueDate": null,
+    "priority": "medium",
+    "products": [
+      {
+        "id": 0,
+        "label": "Printer",
+        "price": 249.99,
+        "quantity": 2,
+        "total": 499.98
+      },
+      {
+        "id": 0,
+        "label": "Mouse",
+        "price": 49.99,
+        "quantity": 3,
+        "total": 149.97
+      },
+      {
+        "id": 0,
+        "label": "Tablet",
+        "price": 499.99,
+        "quantity": 2,
+        "total": 999.98
+      }
+    ],
+    "budget": 1649.93,
+    "costCenter": "CC200",
+    "attachments": [
+      {
+        "name": "purchase_order.pdf",
+        "url": "",
+        "size": 0
+      },
+      {
+        "name": "invoice.pdf",
+        "url": "",
+        "size": 0
+      },
+      {
+        "name": "approval_form.jpg",
+        "url": "",
+        "size": 0
+      }
+    ],
+    "createdAt": "2025-02-27T19:37:37.6289054Z"
+  },
+  {
+    "id": 4,
+    "requestorName": "John Doe",
+    "requestorEmail": "johndoe@example.com",
+    "department": "marketing",
+    "employeeID": "EMP12345",
+    "onBehalfOf": null,
+    "requestTitle": "Office Equipment Purchase",
+    "description": "Requesting approval to purchase office equipment for new hires",
+    "requestedDate": "2022-09-15",
+    "dueDate": null,
+    "priority": "low",
+    "products": [
+      {
+        "id": 0,
+        "label": "Phone",
+        "price": 799.99,
+        "quantity": 2,
+        "total": 1599.98
+      },
+      {
+        "id": 0,
+        "label": "External Hard Drive",
+        "price": 119.99,
+        "quantity": 1,
+        "total": 119.99
+      },
+      {
+        "id": 0,
+        "label": "Mouse",
+        "price": 49.99,
+        "quantity": 1,
+        "total": 49.99
+      }
+    ],
+    "budget": 1769.96,
+    "costCenter": "CC300",
+    "attachments": [
+      {
+        "name": "purchase_order.pdf",
+        "url": "",
+        "size": 0
+      },
+      {
+        "name": "invoice.pdf",
+        "url": "",
+        "size": 0
+      },
+      {
+        "name": "product_image.jpg",
+        "url": "",
+        "size": 0
+      }
+    ],
+    "createdAt": "2025-03-27T21:39:47.0135432Z"
+  },
+  {
+    "id": 5,
+    "requestorName": "Elena Rodriguez",
+    "requestorEmail": "elena.rodriguez@company.com",
+    "department": "engineering",
+    "employeeID": "EMP456",
+    "onBehalfOf": null,
+    "requestTitle": "IT Equipment Purchase",
+    "description": "Requesting purchase of IT equipment for new hires",
+    "requestedDate": "2022-10-15",
+    "dueDate": null,
+    "priority": "high",
+    "products": [
+      {
+        "id": 0,
+        "label": "Webcam",
+        "price": 79.99,
+        "quantity": 2,
+        "total": 159.98
+      },
+      {
+        "id": 0,
+        "label": "Keyboard",
+        "price": 89.99,
+        "quantity": 1,
+        "total": 89.99
+      },
+      {
+        "id": 0,
+        "label": "Laptop",
+        "price": 1299.99,
+        "quantity": 1,
+        "total": 1299.99
+      }
+    ],
+    "budget": 1549.96,
+    "costCenter": "CC200",
+    "attachments": [
+      {
+        "name": "invoice_2022.pdf",
+        "url": "",
+        "size": 0
+      },
+      {
+        "name": "product_catalog.pdf",
+        "url": "",
+        "size": 0
+      }
+    ],
+    "createdAt": "2025-04-27T21:55:56.51859Z"
+  },
+  {
+    "id": 6,
+    "requestorName": "Elena Rodriguez",
+    "requestorEmail": "elena.rodriguez@company.com",
+    "department": "finance",
+    "employeeID": "EMP789",
+    "onBehalfOf": null,
+    "requestTitle": "Office Supplies Purchase",
+    "description": "Requesting purchase of office supplies for the finance department.",
+    "requestedDate": "2023-10-15",
+    "dueDate": null,
+    "priority": "medium",
+    "products": [
+      {
+        "id": 0,
+        "label": "Mouse",
+        "price": 49.99,
+        "quantity": 3,
+        "total": 149.97
+      },
+      {
+        "id": 0,
+        "label": "Phone",
+        "price": 799.99,
+        "quantity": 3,
+        "total": 2399.97
+      },
+      {
+        "id": 0,
+        "label": "Tablet",
+        "price": 499.99,
+        "quantity": 2,
+        "total": 999.98
+      }
+    ],
+    "budget": 2549.92,
+    "costCenter": "CC100",
+    "attachments": [
+      {
+        "name": "purchase_order.pdf",
+        "url": "",
+        "size": 0
+      },
+      {
+        "name": "invoice_receipt.png",
+        "url": "",
+        "size": 0
+      }
+    ],
+    "createdAt": "2025-05-27T21:56:36.5502269Z"
   }
 ]

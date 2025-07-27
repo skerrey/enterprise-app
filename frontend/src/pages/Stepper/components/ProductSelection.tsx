@@ -95,6 +95,7 @@ export default function ProductSelection({ form, setForm }: Props) {
           }))}
           defaultSelected={selectedLabels}
           onChange={onProductsChange}
+          required
         />
 
         {/* header + rows */}

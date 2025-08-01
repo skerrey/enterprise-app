@@ -132,8 +132,16 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult GetAllRequests()
         {
-            var json = System.IO.File.ReadAllText(dataPath);
-            return Ok(json);
+            try
+            {
+                requests = LoadRequestsFromFile();
+                return Ok(requests);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting requests: {ex.Message}");
+                return StatusCode(500, new { message = $"Error getting requests: {ex.Message}" });
+            }
         }
 
         [HttpGet("metrics")]
@@ -199,6 +207,79 @@ namespace backend.Controllers
             var request = requests.FirstOrDefault(r => r.Id == id);
             if (request == null) return NotFound();
             return Ok(request);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateRequest(int id, [FromBody] Request request)
+        {
+            try
+            {
+                // Load fresh data from file
+                requests = LoadRequestsFromFile();
+
+                var existingRequest = requests.FirstOrDefault(r => r.Id == id);
+                if (existingRequest == null)
+                {
+                    return NotFound(new { message = "Request not found" });
+                }
+
+                // Update the request properties
+                existingRequest.RequestorName = request.RequestorName;
+                existingRequest.RequestorEmail = request.RequestorEmail;
+                existingRequest.Department = request.Department;
+                existingRequest.EmployeeID = request.EmployeeID;
+                existingRequest.OnBehalfOf = request.OnBehalfOf;
+                existingRequest.RequestTitle = request.RequestTitle;
+                existingRequest.Description = request.Description;
+                existingRequest.RequestedDate = request.RequestedDate;
+                existingRequest.DueDate = request.DueDate;
+                existingRequest.Priority = request.Priority;
+                existingRequest.Products = request.Products;
+                existingRequest.Budget = request.Budget;
+                existingRequest.CostCenter = request.CostCenter;
+                existingRequest.Attachments = request.Attachments;
+
+                // Save to file
+                SaveRequestsToFile();
+
+                Console.WriteLine($"Request updated with ID: {id}");
+                return Ok(existingRequest);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating request: {ex.Message}");
+                return StatusCode(500, new { message = $"Error updating request: {ex.Message}" });
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteRequest(int id)
+        {
+            try
+            {
+                // Load fresh data from file
+                requests = LoadRequestsFromFile();
+
+                var request = requests.FirstOrDefault(r => r.Id == id);
+                if (request == null)
+                {
+                    return NotFound(new { message = "Request not found" });
+                }
+
+                // Remove the request
+                requests.Remove(request);
+
+                // Save to file
+                SaveRequestsToFile();
+
+                Console.WriteLine($"Request deleted with ID: {id}");
+                return Ok(new { message = "Request deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting request: {ex.Message}");
+                return StatusCode(500, new { message = $"Error deleting request: {ex.Message}" });
+            }
         }
     }
 }

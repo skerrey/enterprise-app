@@ -31,13 +31,12 @@ export default function RequestsPage() {
       <PageBreadcrumb pageTitle="Requests" />
 
       <div>
-
         {loading ? (
           <p className="text-sm text-gray-500 dark:text-gray-400">Loading...</p>
         ) : requests.length === 0 ? (
           <p className="text-sm text-gray-500 dark:text-gray-400">No requests found.</p>
         ) : (
-          <BasicRequestsTable data={requests} />
+          <BasicRequestsTable data={requests} onDataChange={fetchRequests} />
         )}
       </div>
     </div>

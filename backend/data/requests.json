@@ -92,7 +92,7 @@
   {
     "id": 3,
     "requestorName": "Jane Sampson",
-    "requestorEmail": "janesampson@example.com",
+    "requestorEmail": "janesampson@mail.com",
     "department": "engineering",
     "employeeID": "E12345",
     "onBehalfOf": null,
@@ -148,7 +148,7 @@
   {
     "id": 4,
     "requestorName": "John Doe",
-    "requestorEmail": "johndoe@example.com",
+    "requestorEmail": "johndoe@mail.com",
     "department": "marketing",
     "employeeID": "EMP12345",
     "onBehalfOf": null,
@@ -203,8 +203,8 @@
   },
   {
     "id": 5,
-    "requestorName": "Elena Rodriguez",
-    "requestorEmail": "elena.rodriguez@company.com",
+    "requestorName": "Alex Brandon",
+    "requestorEmail": "alexbrandon@mail.com",
     "department": "engineering",
     "employeeID": "EMP456",
     "onBehalfOf": null,
@@ -254,30 +254,23 @@
   },
   {
     "id": 6,
-    "requestorName": "Elena Rodriguez",
-    "requestorEmail": "elena.rodriguez@company.com",
-    "department": "finance",
+    "requestorName": "Liam Hemsworth",
+    "requestorEmail": "liamh@mail.com",
+    "department": "engineering",
     "employeeID": "EMP789",
     "onBehalfOf": null,
-    "requestTitle": "Office Supplies Purchase",
-    "description": "Requesting purchase of office supplies for the finance department.",
-    "requestedDate": "2023-10-15",
+    "requestTitle": "Office Equipment Purchase",
+    "description": "Requesting approval to purchase office equipment for new hires.",
+    "requestedDate": "2022-09-15",
     "dueDate": null,
     "priority": "medium",
     "products": [
       {
         "id": 0,
-        "label": "Mouse",
-        "price": 49.99,
-        "quantity": 3,
-        "total": 149.97
-      },
-      {
-        "id": 0,
-        "label": "Phone",
-        "price": 799.99,
-        "quantity": 3,
-        "total": 2399.97
+        "label": "Monitor",
+        "price": 329.99,
+        "quantity": 2,
+        "total": 659.98
       },
       {
         "id": 0,
@@ -285,22 +278,34 @@
         "price": 499.99,
         "quantity": 2,
         "total": 999.98
+      },
+      {
+        "id": 0,
+        "label": "Keyboard",
+        "price": 89.99,
+        "quantity": 3,
+        "total": 269.97
       }
     ],
-    "budget": 2549.92,
-    "costCenter": "CC100",
+    "budget": 1929.93,
+    "costCenter": "CC300",
     "attachments": [
       {
-        "name": "purchase_order.pdf",
+        "name": "invoice_2022.pdf",
         "url": "",
         "size": 0
       },
       {
-        "name": "invoice_receipt.png",
+        "name": "receipt_scan.jpg",
+        "url": "",
+        "size": 0
+      },
+      {
+        "name": "approval_form.pdf",
         "url": "",
         "size": 0
       }
     ],
-    "createdAt": "2025-05-27T21:56:36.5502269Z"
+    "createdAt": "2025-08-01T21:17:58.5743615Z"
   }
 ]

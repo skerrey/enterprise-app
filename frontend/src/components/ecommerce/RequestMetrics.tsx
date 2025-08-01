@@ -6,12 +6,11 @@ interface MetricProps {
   title: string;
   value: number | string;
   icon: string;
-  trend: string;
   isPositive: boolean;
   onClick?: () => void; // Optional click handler
 }
 
-const MetricCard: React.FC<MetricProps> = ({ title, value, icon, trend, isPositive, onClick }) => (
+const MetricCard: React.FC<MetricProps> = ({ title, value, icon, isPositive, onClick }) => (
   <div 
     className={`rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 ${
       onClick ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-white/[0.05] transition-colors' : ''
@@ -47,7 +46,7 @@ const MetricCard: React.FC<MetricProps> = ({ title, value, icon, trend, isPositi
             <path d="M8 12L3 7h10l-5 5z" />
           )}
         </svg>
-        {trend}
+
       </div>
     </div>
   </div>
@@ -103,21 +102,18 @@ export default function RequestMetrics() {
       title: "Total Requests",
       value: metrics?.totalRequests,
       icon: "📋",
-      trend: "12.5%",
       isPositive: true
     },
     {
       title: "Completed This Month",
       value: metrics?.completedThisMonth,
       icon: "✅",
-      trend: "18.7%",
       isPositive: true
     },
     {
       title: "High Priority",
       value: metrics?.highPriority,
       icon: "🚨",
-      trend: "3.1%",
       isPositive: false
     }
   ];

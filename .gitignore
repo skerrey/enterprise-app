@@ -29,3 +29,6 @@ Thumbs.db
 
 # Ignore local config files
 **/appsettings.Development.json
+
+# data folder
+**/data/

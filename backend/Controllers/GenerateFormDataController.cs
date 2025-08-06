@@ -115,7 +115,7 @@ namespace backend.Controllers
                 - costCenter: ""{selectedCostCenter.value}""
 
                 CRITICAL: Generate completely UNIQUE and VARIED names and emails each time:
-                - requestorName: Use diverse, realistic full names from different cultures/backgrounds (e.g., ""Elena Rodriguez"", ""Marcus Chen"", ""Priya Patel"", ""James O'Connor"", ""Fatima Al-Zahra"")
+                - requestorName: Use diverse, realistic full names from different cultures/backgrounds
                 - requestorEmail: Create professional emails that match the names (firstname.lastname@company.com format)
                 - employeeID: Generate a unique employee ID (format: EMP + 3-4 random digits)
 

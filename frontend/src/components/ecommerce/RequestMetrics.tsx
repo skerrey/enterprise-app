@@ -82,7 +82,6 @@ export default function RequestMetrics() {
   const fetchRequests = async () => {
     try {
       const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/Requests/metrics`);
-      console.log("data", data);
       setMetrics(data);
     } catch (error) {
       console.error("Failed to fetch requests", error);
